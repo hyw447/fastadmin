@@ -26,14 +26,11 @@ class User extends Model
         self::beforeUpdate(function ($row) {
             $changed = $row->getChangedData();
             //如果有修改密码
-            if (isset($changed['password'])) {
-                if ($changed['password']) {
-                    $salt = \fast\Random::alnum();
-                    $row->password = \app\common\library\Auth::instance()->getEncryptPassword($changed['password'], $salt);
-                    $row->salt = $salt;
-                } else {
-                    unset($row->password);
-                }
+            if (isset($changed['password']))
+            {
+                $salt = \fast\Random::alnum();
+                $row->password = \app\common\library\Auth::instance()->getEncryptPassword($changed['password'], $salt);
+                $row->salt = $salt;
             }
         });
     }
